@@ -1,0 +1,14 @@
+#%RAML 1.0 DataType
+description: use this type for variant attribute
+type: object
+properties:
+  attributeDefinitionId:
+    type: string
+    maxLength: 50
+    description: The id of the requested attribute definition.
+  id: 
+    type: string
+    maxLength: 50
+    description: The id of the variation attribute.
+examples:
+  !include examples/variation-attribute-example.raml

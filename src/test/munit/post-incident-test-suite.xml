@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="logic-test-suite.xml" />
+	<munit:test name="logic-test-suite-logic-subflowTest" doc:id="7a692b84-b82e-4279-8285-9be3d332b407" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="132ad08e-df72-4499-bd78-fe7c08360781" >
+				<munit:payload value="#[readUrl('classpath://transforms/examples/incident-mock-payload.dwl')]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to case_invoke-snow-sys-api" doc:id="9a011f36-679d-41e5-ad06-7068fd1cf6e2" name="case_invoke-snow-sys-api"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="ee9795cd-993f-46f5-a6ba-c26b5a726183" expression="#[payload.incidentNumber]" is="#[MunitTools::notNullValue()]" message="${munit.message}"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

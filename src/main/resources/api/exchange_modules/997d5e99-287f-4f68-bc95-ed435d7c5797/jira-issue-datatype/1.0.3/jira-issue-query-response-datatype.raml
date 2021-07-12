@@ -1,0 +1,66 @@
+#%RAML 1.0 DataType
+
+type: object
+properties: 
+  projectKey:
+    type: string
+    required: true
+    description: Project Key where Issue is present
+  summary:
+    type: string
+    required: false
+    description: Summary of the Issue
+  description:
+      type: string
+      required: false
+      description: Description of the Issue
+  issuetype:
+      type: string
+      required: false
+      description: Type of the Issue eg-Bug
+  priority:
+      type: string
+      required: false
+      description: Priority of the issue
+  sfdcCaseId:
+      type: string
+      required: false
+      description: Salesforce Case Id to maintain correlation with Service Cloud
+  status:
+      type: string
+      required: false
+      description: Status of the Issue
+  owner:
+      type: string
+      required: false
+      description: Owner of the Issue
+  lastUpdatedDate:
+      type: string
+      required: false
+      description: Last updated date of the Issue
+  comments:
+      type: string
+      required: false
+      description: Comments added to the Issue
+  externalComments:
+      type: string
+      required: false
+      description: External Comments of the Issue
+  externalStatus:
+      type: string
+      required: false
+      description: External Status of the Issue
+  externalSystemLastUpdated:
+      type: string
+      required: false
+      description: External System Last Updated of the issue
+  externalOwner:
+      type: string
+      required: false
+      description: External Owner of the Issue
+  externalPriority:
+      type: string
+      required: false
+      description: External Priority of the Issue
+examples: !include examples/jira-issue-query-response.raml
+ 

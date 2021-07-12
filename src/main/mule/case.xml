@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	 <flow name="case_post-case">
+		
+		<flow-ref doc:name="sfdc-case_sfdc-case-lookup" doc:id="39af39f8-df0e-485f-be9b-ac373bea818c" name="sfdc-case_sfdc-case-lookup"/>
+		<scatter-gather doc:name="Scatter-Gather" doc:id="450c2305-18ed-40a9-b7a6-1f77d0fe207d" >
+			<route >
+				<flow-ref doc:name="case_invoke-jira-sys-api" doc:id="a76f09a1-81bf-4119-a958-e7b02314bec1" name="case_invoke-jira-sys-api"/>
+			</route>
+			<route >
+				<flow-ref doc:name="case_invoke-snow-sys-api" doc:id="fb023078-29e9-48f1-b5d7-7a3b3859eb0a" name="case_invoke-snow-sys-api"/>
+			</route>
+		
+</scatter-gather>
+		<ee:transform doc:name="To JSON" doc:id="f19ed159-971e-42d1-be13-a00c8f6a0917" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Response Map" doc:id="f9a0ade0-cbfb-4842-a9bc-ef2353c86bf4">
+					<ee:message>
+				<ee:set-payload resource="transforms/dwl/incident-issue-success-res-json.dwl" />
+					</ee:message>
+				</ee:transform>
+		
+    </flow>
+    <flow name="case_patch-case">
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" doc:id="cd3dc75d-04a4-4255-8c6f-bbba78603866" doc:name="SF Request Map">
+            <ee:message >
+				<ee:set-payload resource="transforms/dwl/sfdc-case-update-json.dwl" />
+			</ee:message>
+			<ee:variables>
+            </ee:variables>
+        </ee:transform>
+        <logger level="TRACE" doc:name="Before Request" doc:id="8db3b674-aecd-4ef6-b2da-e0cce0c4cd0e" message="${application-msgs.before-connector-call-message}"/>
+		<until-successful maxRetries="${retry.http.numRetries}" doc:name="retry-sf-sys-api" doc:id="858f166e-326a-4b1f-91b3-7d3bf8d9b768" millisBetweenRetries="${retry.http.delayMillisecs}">
+		<http:request method="PATCH" doc:name="Invoke SF System API" doc:id="6d9189c0-525a-417f-83c4-10ed139bd6b4" config-ref="sfdc-sys-api-httpRequestConfig" sendCorrelationId="ALWAYS" path="${sfdc-sys-api.path}" correlationId="#[correlationId]">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	
+	"Content-Type" : "${sfdc-sys-api.content-type}"
+}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"caseId" : payload.caseId
+}]]]></http:uri-params>
+		</http:request>
+		</until-successful>
+        <logger level="TRACE" doc:name="After Request" doc:id="fdead3d6-139c-41f2-b3e5-af4f77734969" message="${application-msgs.after-connector-call-message}"/>
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="f561aa4d-5387-4efe-a303-52c1f1343a95" doc:name="Response Map">
+            <ee:message>
+				<ee:set-payload resource="transforms/dwl/update-case-res-json.dwl" />
+            </ee:message>
+        </ee:transform>
+    </flow>
+	<sub-flow name="case_invoke-jira-sys-api" doc:id="fb5d2d4e-05f6-4097-93d4-0d4950c98552">
+	<choice doc:name="Route To JIRA Check" doc:id="75b5661e-eb6a-4d8e-9e8a-afbba840c404" >
+			<when expression="#[payload.syncToJIRA]">
+				<ee:transform doc:name="JIRA Request Map" doc:id="0eaaf561-3f38-49b9-8a4d-7d10d32851a4">
+					<ee:message>
+						<ee:set-payload resource="transforms/dwl/jira-sys-api-req-json.dwl" />
+					</ee:message>
+				</ee:transform>
+				<logger level="TRACE" doc:name="Before Request" doc:id="d558408c-08cf-4339-bcd9-62e13a677b03" message="${application-msgs.before-connector-call-message}"/>
+				<until-successful maxRetries="${retry.http.numRetries}" doc:name="retry-jira-sys-api" doc:id="079a6a9d-f06b-49ae-871a-10d53d279e72" millisBetweenRetries="${retry.http.delayMillisecs}">
+				<http:request method="POST" doc:name="Invoke JIRA Sys API" doc:id="da648475-e672-4424-90f6-d434116d3107" config-ref="jira-sys-api-httpRequestConfig" path="${jira-sys-api.path}" sendCorrelationId="ALWAYS" correlationId="#[correlationId]">
+					<http:headers><![CDATA[#[output application/java
+---
+{
+	
+	"Content-Type" : "${jira-sys-api.content-type}"
+}]]]></http:headers>
+				</http:request>
+				</until-successful>
+				<logger level="TRACE" doc:name="After Request" doc:id="40fbe272-a733-4a47-95b8-28de7a281a65" message="${application-msgs.after-connector-call-message}"/>
+				<ee:transform doc:name="Response Map" doc:id="d4c38d75-ab18-4d71-996c-108ed85cc730" >
+					<ee:message >
+						<ee:set-payload resource="transforms/dwl/create-issue-jira-res-json.dwl" />
+					</ee:message>
+				</ee:transform>
+			</when>
+			<otherwise >
+				<logger level="TRACE" doc:name="No Matched Route" doc:id="5c12fded-4d1b-473c-8f25-fafe61829e8f" message="{application-msgs.no-match-route-found}"/>
+			</otherwise>
+		</choice>
+	</sub-flow>
+	<sub-flow name="case_invoke-snow-sys-api" doc:id="0bc437cd-3602-4423-91ac-255fa8fc8df2">
+	<choice doc:name="Route To Service Now Check" doc:id="f0712822-86fd-425b-9e37-e271ab36f1e4" >
+			<when expression="#[payload.syncToSNOW]">
+				<ee:transform doc:name="SNOW Request Map" doc:id="29c1fed3-ce0d-464c-907f-1e5ac930f949">
+			<ee:message>
+				<ee:set-payload resource="transforms/dwl/incident-prc-json.dwl" />
+				
+			</ee:message>
+		</ee:transform>
+				<logger level="TRACE" doc:name="Before Request" doc:id="a69bca36-c3b4-43cc-b559-84220edf3775" message="${application-msgs.before-connector-call-message}"/>
+				<until-successful maxRetries="${retry.http.numRetries}" doc:name="retry-snow-sys-api" doc:id="b93e5ff7-4978-4f27-84de-14aaa2ccf7ae" millisBetweenRetries="${retry.http.delayMillisecs}">
+				<http:request method="POST" doc:name="Invoke SNOW Sys API" doc:id="4158a3d8-4319-4a3c-ad6e-a643a0df5edd" config-ref="snow-sys-api-httpRequestConfig" path="${snow-sys-api.path}" sendCorrelationId="ALWAYS" correlationId="#[correlationId]">
+			<http:headers><![CDATA[#[output application/java
+---
+{
+	
+	"Content-Type" : "${snow-sys-api.content-type}"
+}]]]></http:headers>
+		</http:request>
+		</until-successful>
+				<logger level="TRACE" doc:name="After Request" doc:id="54e0ff3e-e8c6-422f-951a-40c8fe90443e" message="${application-msgs.after-connector-call-message}"/>
+				<ee:transform doc:name="Reponse Map" doc:id="be9ec9ce-baf3-4430-830e-6993e2b8f281">
+			<ee:message>
+				<ee:set-payload resource="transforms/dwl/incident-prc-res-json.dwl" />
+			</ee:message>
+		</ee:transform>
+			</when>
+			<otherwise >
+				<logger level="TRACE" doc:name="No Matched Route" doc:id="aa01997e-5c6f-4598-af14-4553639acdab" message="{application-msgs.no-match-route-found}"/>
+			</otherwise>
+		</choice>
+	</sub-flow>
+	</mule>

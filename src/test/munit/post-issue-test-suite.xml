@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="case-test-suite.xml" />
+	<munit:test name="case-test-suite-post:\case:application\json:case-prc-api-configTest" doc:id="32a8586d-c8a0-4b3d-9a47-bac72d0763ed" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="38eea29b-c938-4dcf-aded-0116a48d2e0c">
+				<munit:payload value="#[readUrl('classpath://transforms/examples/issue-mock-payload.dwl')]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\case:application\json:case-prc-api-config" doc:id="3206ebfb-78a9-4245-b8df-525df7d1242a" name="case_invoke-jira-sys-api"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="b70c0da6-28e7-438b-a066-dc1c2c0d029b" expression="#[payload.jiraSysId]" is="#[MunitTools::notNullValue()]" message="${munit.message}" />
+		</munit:validation>
+	</munit:test>
+
+</mule>

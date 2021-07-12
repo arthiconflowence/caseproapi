@@ -1,0 +1,35 @@
+#%RAML 1.0 DataType
+type: object
+properties: 
+  uuid:
+    type: string
+    required: true
+    description: Unique identifier for the product across all the business systems
+  hostSystem:
+    type: string
+    required: true
+    description: Different business sytems e.g. UBS, WBS, TFF, ALB, CA1, CA2
+  productId:
+    type: string
+    required: true
+    description: ProductId unique within the division
+  available:
+    type: integer
+    required: true
+    description: OnHand minus committed
+  onHand:
+    type: integer
+    required: true
+    description: Allocable products
+  unsellable:
+    type: integer
+    required: true
+    description: Not in sellable condition(damaged, spoiled, recalled)
+  nextReceiptDate:
+    type: date-only
+    required: true
+    description: The Date on which this product is going to be next received
+  warehouseId:
+    type: integer
+    required: true
+    description: Warehouse identifier within the business system

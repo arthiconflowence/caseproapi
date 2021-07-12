@@ -1,0 +1,49 @@
+#%RAML 1.0 DataType
+description: use this type for product
+type: object
+properties:
+  brand:
+    type: string
+    required: false
+    maxLength: 100
+    description: The brand of the product.
+  shortDescription:
+    type: string
+    required: false
+    maxLength: 300
+    description: The localized short description of the product.
+  longDescription:
+    type: string
+    required: false
+    maxLength: 300
+    description: The localized long description of the product.
+  upc:
+    type: string
+    required: false
+    description: The Universal Product Code of the product.
+  unit:
+    type: string
+    required: false
+    description: The sales unit of the product.
+  productType:
+    type: string
+    enum: [master,variant,item]
+    description: The type of the product. It can have one of the values  "master" or "item" or  "variant".
+  owningCatalogId:
+    type: string
+    description: The ID of the catalog that owns the product.
+  manufacturerName:
+    type: string
+    required: false
+    description: The name of the product's manufacturer.
+  manufacturerSku:
+    type: string
+    required: false
+    description: The SKU of the product's manufacturer.
+  name:
+    type: string
+    required: false
+    description: The localized name of the product.
+examples:
+  !include example/product-example.raml
+      

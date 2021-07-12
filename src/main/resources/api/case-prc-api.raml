@@ -1,0 +1,58 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/1a7c221e-ddb4-42e7-a6cc-ecad4d0f0e05/ # 
+title: Case Process API
+#%RAML 1.0
+description: Process API which Orchestrates Case Data into required destinations such as SNOW,JIRA.Orchestrates Case Updates back to Salesforce from Service Now and JIRA.
+version: v1
+mediaType: application/json
+
+uses: 
+  lib: exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/catalyst-library/1.0.45/catalyst-library.raml
+
+types:
+  caseResponse: !include type/case-post-response-dataType.raml
+  caseUpdateResponse: !include type/case-update-response-dataType.raml
+
+    
+
+securedBy: [ lib.basicAuthSecurity ]
+/case:
+   post:
+      body:
+       application/json:
+        type:  lib.case
+      
+          
+      is:
+       [lib.trackable, lib.returns-400,lib.returns-404,lib.returns-405,lib.returns-406,lib.returns-415,lib.returns-500,lib.returns-501]
+      description: Invokes SNOW/JIRA System API with Case data  from Salesforce
+    
+      responses: 
+        200:
+         body: 
+            application/json:
+              type: caseResponse
+              
+
+/sfdc-case:
+   /{caseId}:
+    patch:
+      displayName: Update SFDC Case Object
+      body:
+       application/json:
+        type:  lib.case
+        
+          
+      is:
+       [lib.trackable, lib.returns-400,lib.returns-404,lib.returns-405,lib.returns-406,lib.returns-415,lib.returns-500,lib.returns-501]
+      description: Invokes sfdc-sys-api to  update case object in Salesforce
+    
+      responses: 
+        200:
+         body: 
+            application/json:
+              type: caseUpdateResponse
+            
+
+  
+  

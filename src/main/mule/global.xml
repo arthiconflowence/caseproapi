@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:servicenow="http://www.mulesoft.org/schema/mule/servicenow"
+	xmlns:anypoint-mq="http://www.mulesoft.org/schema/mule/anypoint-mq" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/anypoint-mq http://www.mulesoft.org/schema/mule/anypoint-mq/current/mule-anypoint-mq.xsd
+http://www.mulesoft.org/schema/mule/servicenow http://www.mulesoft.org/schema/mule/servicenow/current/mule-servicenow.xsd">
+    
+    <http:listener-config name="case-prc-api-httpListenerConfig">
+        <http:listener-connection host="${case-prc-api.http-listener.host}" port="${case-prc-api.http-listener.port}" />
+    </http:listener-config>
+    <apikit:config name="case-prc-api-config" raml="case-prc-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" api="case-prc-api.raml"/>
+	<http:request-config name="snow-sys-api-httpRequestConfig" doc:name="HTTP Request configuration" doc:id="3c76e96e-d5ad-446d-b57f-40c2f970e20f" basePath="${snow-sys-api.base-path}" responseTimeout="${snow-sys-api.response-timeout}">
+		<http:request-connection host="${snow-sys-api.host}" port="${snow-sys-api.port}" connectionIdleTimeout="${snow-sys-api.connection-idle-timeout}">
+			<reconnection >
+				<reconnect frequency="${snow-sys-api.http-frequency}" count="${snow-sys-api.http-reconnection-attempts}" />
+			</reconnection>
+		</http:request-connection>
+	</http:request-config>
+	<http:request-config name="sfdc-sys-api-httpRequestConfig" doc:name="HTTP Request configuration" doc:id="a2136abc-175e-4556-97de-8de812581573" basePath="${sfdc-sys-api.base-path}" responseTimeout="${sfdc-sys-api.response-timeout}">
+		<http:request-connection host="${sfdc-sys-api.host}" port="${sfdc-sys-api.port}" connectionIdleTimeout="${sfdc-sys-api.connection-idle-timeout}">
+			<reconnection >
+				<reconnect frequency="${sfdc-sys-api.http-frequency}" count="${sfdc-sys-api.http-reconnection-attempts}" />
+			</reconnection>
+		</http:request-connection>
+	</http:request-config>
+		<http:request-config name="jira-sys-api-httpRequestConfig" doc:name="HTTP Request configuration" doc:id="4cab36b0-8679-43ab-b221-c443d19f8e44" basePath="${jira-sys-api.base-path}" responseTimeout="${jira-sys-api.response-timeout}">
+		<http:request-connection host="${jira-sys-api.host}" port="${jira-sys-api.port}" connectionIdleTimeout="${jira-sys-api.connection-idle-timeout}">
+			<reconnection >
+				<reconnect frequency="${jira-sys-api.http-frequency}" count="${jira-sys-api.http-reconnection-attempts}" />
+			</reconnection>
+		</http:request-connection>
+	</http:request-config>
+	<configuration-properties doc:name="configuration-properties-based-on-env" doc:id="939c271a-0e1d-4c50-a574-2fe4d75481bd" file="properties/${mule.env}.yaml" />
+	<secure-properties:config name="Secure_Properties_Config-env-based" doc:name="Secure Properties Config based on env" doc:id="d7504456-af7c-422f-924d-4ffd88300108" file="properties/${mule.env}-secure.yaml" key="${encryptionKey}" />
+	<global-property doc:name="EncryptionKey Global Property" doc:id="c88503d7-b004-4abc-8857-4596f17394e7" name="encryptionKey" value="Placeholder Needed For Designer. Real Value provided at runtime." />
+
+	<configuration doc:name="Configuration-default-error-handler" doc:id="29fc8aa5-15e9-45b0-9034-8efd1244c78f" defaultErrorHandler-ref="error-handler_common" />
+	<api-gateway:autodiscovery apiId="${api.autodiscoveryID}" doc:name="API Autodiscovery ID" doc:id="0e4ac08d-a5c4-40ce-9962-494c5ae86829" flowRef="case-prc-api_case-prc-api-main" />
+	
+    <import doc:name="Import-global-common" doc:id="3303247a-3986-41be-93d4-0385333c1dc3"
+		file="global-common.xml" />
+	<import doc:name="Import-common-error-handler" doc:id="d4d45cfd-64bb-4eb1-9221-edb9a4031152"
+		file="common-error-handler.xml" />
+	
+</mule>

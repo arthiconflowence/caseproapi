@@ -1,0 +1,69 @@
+#API Configurations
+case-prc-api: 
+  http-listener:
+    host: "REPLACE_BY_USER"
+    port: "REPLACE_BY_USER"
+    path: "/api/*"
+api:
+  #Replace with respective autodiscovery id
+  autodiscoveryID: "REPLACE_BY_USER"
+#SNOW System API Configurations
+snow-sys-api: 
+  base-path: "/"
+  http-reconnection-attempts: "2"
+  connection-idle-timeout: "3000"
+  port: "REPLACE_BY_USER"
+  content-type: "application/json"
+  path: "/api/incident"
+  response-timeout: "60000"
+  http-frequency: "5000"
+  #Replace with respective application hostname
+  host: "REPLACE_BY_USER"
+#SFDC System API Configuration
+sfdc-sys-api:  
+  http-frequency: "5000"
+  content-type: "application/json"
+  base-path: "/"
+  port: "REPLACE_BY_USER"
+  response-timeout: "60000"
+  path: "/api/case/{caseId}"
+  connection-idle-timeout: "3000"
+  http-reconnection-attempts: "2"
+  #Replace with respective application hostname
+  host: "REPLACE_BY_USER"
+# JIRA System API Configuration
+jira-sys-api: 
+  connection-idle-timeout: "3000"
+  # Replace the respective JIRA Project Key Used
+  project-key: "REPLACE_BY_USER"
+  port: "REPLACE_BY_USER"
+  path: "/api/issue"
+  http-frequency: "5000"
+  base-path: "/"
+  http-reconnection-attempts: "2"
+  content-type: "application/json"
+  #Replace with respective application hostname
+  host: "REPLACE_BY_USER"
+  response-timeout: "60000"
+#Customize the application messages in the below section
+application-msgs: 
+  #JIRA Issue create success message
+  jira-create-success-message:  "Issue Created Successfully"
+  success-msg: "Success"
+  # No Route Matching Message
+  no-match-route-found: "No Matching Route Found"
+  #Before Connector logger message
+  before-connector-call-message: "Before Connector Call"
+  #After Connector logger message
+  after-connector-call-message:  "After Connector Call"
+  #SNOW Incident create success message
+  incident-create-success-message: "Incident Created Successfully"
+#MUNIT Message for failed tests
+munit: 
+  message: "Test Failed"
+
+#retry
+retry:
+   http: 
+    delayMillisecs: "3000"
+    numRetries: "3"

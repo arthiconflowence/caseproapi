@@ -1,0 +1,107 @@
+#%RAML 1.0 Library
+
+usage: This is RAML library file
+
+securitySchemes:
+  basicAuthSecurity: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/basic-auth-securityscheme/1.0.1/basic-auth-securityscheme.raml
+
+types:
+  inventory: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/reference-datatype/1.0.0/reference-datatype.raml
+  catalystError: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/error-types/1.0.0/error-datatype.raml
+  incident: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/snow-incident-datatype/1.0.13/snow-incident-datatype.raml
+  incidentInsertResponse: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/snow-incident-datatype/1.0.13/snow-incident-insert-response-datatype.raml
+  success: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/success-datatype/1.0.0/success-datatype.raml
+  case: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/case-datatype/1.0.3/case-datatype.raml
+  issue: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/jira-issue-datatype/1.0.3/jira-issue-datatype.raml
+  product: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/product-dataType/1.0.2/product-dataType.raml
+  variationAttribute: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/variationattribute-dataType/1.0.1/variationAttribute-dataType.raml
+  variationAttributeValue: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/variationAttributeValue-dataType/1.0.1/variationAttributeValue-dataType.raml
+  variant: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/variant-dataType/1.0.1/variant-dataType.raml
+  pimProduct: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/pimProduct-dataType/1.0.2/pimProduct-dataType.raml
+  invent: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/inventory-datatype/1.0.1/inventory-dataType.raml
+  inventoryBatch: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/inventoryBatch-dataType/1.0.1/inventoryBatch-dataType.raml
+  orderhistoryPrcResponseType: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/orderhistory-prc-datatype/1.0.2/orderhistory-prc-datatype.raml
+  orderhistorySysResponseType: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/orderhistory-sys-datatype/1.0.3/order-history-sys-datatype.raml
+  orderhistoryExpResponseType: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/orderhistory-exp-datatype/1.0.2/orderhistory-exp-datatype.raml 
+  sapSysResponseType: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/inventory-sap-sys-datatype/1.0.4/inventory-sap-sys-datatype.raml
+
+ 
+traits:
+  trackable: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/trackable-trait/1.0.1/trackable-trait.raml
+  sortable: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/sortable-trait/1.0.0/sortable-trait.raml
+  pageable: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/pageable-trait/1.0.0/pageable-trait.raml
+  returns-501:
+    responses:
+        501:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-501-example/1.0.2/returns-501-example.raml
+  returns-500:
+    responses:
+        500:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-500-example/1.0.2/returns-500-example.raml
+  returns-400:
+    responses:
+        400:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-400-example/1.0.1/returns-400-example.raml
+  returns-404:
+    responses:
+        404:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-404-example/1.0.1/returns-404-example.raml
+  returns-405:
+    responses:
+        501:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-501-example/1.0.2/returns-501-example.raml
+  returns-406:
+    responses:
+        406:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-406-example/1.0.1/returns-406-example.raml
+  returns-415:
+    responses:
+        415:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-415-example/1.0.2/returns-415-example.raml
+  returns-200-success:
+    responses:
+      200:
+        body:
+          application/json:
+            type: success
+            example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/returns-200-success-example/1.0.0/returns-200-success-example.raml
+
+resourceTypes:
+  itemCollection:
+    get?:
+      is: [returns-400,returns-404,returns-405,returns-406,returns-415,returns-501,returns-500,returns-200-success]
+      responses:
+        200: 
+    post?:
+      is: [returns-400,returns-404,returns-405,returns-406,returns-415,returns-501,returns-500,returns-200-success]
+  itemType:
+    get?:
+      is: [returns-400,returns-404,returns-405,returns-406,returns-415,returns-501,returns-500,returns-200-success]
+      responses:
+        200: 
+    put?:
+      is: [returns-400,returns-404,returns-405,returns-406,returns-415,returns-501,returns-500,returns-200-success]
+    delete?:
+      is: [returns-400,returns-404,returns-405,returns-406,returns-415,returns-501,returns-500,returns-200-success]
+

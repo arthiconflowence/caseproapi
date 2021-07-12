@@ -1,0 +1,114 @@
+#%RAML 1.0 DataType
+description: use this type for product
+type: object
+properties:
+  productId:
+    type: string
+    maxLength: 50
+    description: The id of the product
+  productType:
+    type: string
+    maxLength: 150
+    description: to indicate master or project or variant
+    enum: [master,product,variant]
+  masterProductId:
+    type: string
+    maxLength: 50
+    required: false
+    description: Master product id.
+  productName:
+    type: string
+    maxLength: 100
+    description: The localized name of the product
+  brand:
+    type: string
+    required: false
+    maxLength: 100
+    description: The brand of the product.
+  shortDescription:
+    type: string
+    required: false
+    maxLength: 300
+    description: The localized short description of the product.
+  longDescription:
+    type: string
+    required: false
+    maxLength: 300
+    description: The localized long description of the product.
+  vendorNumber:
+    type: string
+    maxLength: 50
+    required: false
+    description: The vendor number of the product
+  vendorName:
+    type: string
+    maxLength: 100
+    required: false
+    description: The vendor name of the product
+  vendorSku:
+    type: string
+    maxLength: 100
+    required: false
+    description:  The Vendor SKU
+  owningCatalogId:
+    type: string
+    maxLength: 100
+    description: The owning catalog id.
+  originalRetailPrice:
+    type: string
+    required: false
+    description: The original retail price.
+  taxClassId:
+    type: string
+    required: false
+    description: The tax class id
+  isSearchable:
+    type: string
+    required: false
+    description: The site specific searchable status of the product.
+  priceCurrency:
+    type: string
+    required: false
+    description: The currency code for product's price.
+  saleUnit:
+    type: string
+    required: false
+    description: The sales unit of the product.
+  minOrderQnty:
+    type: string
+    required: false
+    description: The minimum order quantity of product
+  stepQnty:
+    type: string
+    required: false
+    description: The step quantity
+  inStorePickup:
+    type: string
+    required: false
+    description: The in store pick is available
+  varAttKey1:
+    type: string
+    maxLength: 50
+    required: false
+    description: The variation attribute key1
+  varAttKey2:
+    type: string
+    maxLength: 50
+    required: false
+    description: The variation attribute key2
+  varAttVal1:
+    type: string
+    maxLength: 300
+    required: false
+    description: The variation attribute value1
+  varAttVal2:
+    type: string
+    maxLength: 300
+    required: false   
+    description: The variation attribute value2
+  upc:
+    type: string
+    required: false
+    description: The Universal Product Code of the product.
+examples:
+  !include examples/pim-product-example.raml

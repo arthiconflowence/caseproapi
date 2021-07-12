@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<sub-flow name="sfdc-case_sfdc-case-lookup" doc:id="e8075be3-d148-4a7f-b370-97742adeaf6c" >
+		<logger level="TRACE" doc:name="Before Request" doc:id="3d09c534-853d-476a-9737-abe5a7aad17b" message="${application-msgs.before-connector-call-message}"/>
+		<until-successful maxRetries="${retry.http.numRetries}" doc:name="retry sfdc-sys-api" doc:id="acb010ee-f186-4ed9-9930-e8c52680cf0c" millisBetweenRetries="${retry.http.delayMillisecs}">
+		<http:request method="GET" doc:name="Invoke SF System API" doc:id="f625868c-cb00-4899-b377-a7a044737e3e" config-ref="sfdc-sys-api-httpRequestConfig" sendCorrelationId="ALWAYS" path="${sfdc-sys-api.path}" correlationId="#[correlationId]">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	
+	"Content-Type" : "${sfdc-sys-api.content-type}"
+}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"caseId" : payload.caseId
+}]]]></http:uri-params>
+		</http:request>
+		</until-successful>
+		<logger level="TRACE" doc:name="After Request" doc:id="399eb2b6-b68e-439e-b4f8-594c1de1f5aa" message="${application-msgs.after-connector-call-message}"/>
+	</sub-flow>
+</mule>

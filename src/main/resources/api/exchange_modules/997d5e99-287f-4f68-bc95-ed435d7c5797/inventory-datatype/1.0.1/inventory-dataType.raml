@@ -1,0 +1,10 @@
+#%RAML 1.0 DataType
+description: use this type for inventory
+type: object
+properties:
+  amount:
+    type: number
+    required: true
+    description: The actual amount
+examples:
+  !include examples/inventory-put-response.raml

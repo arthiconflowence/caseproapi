@@ -1,0 +1,65 @@
+#%RAML 1.0 DataType
+type: object
+properties: 
+  projectKey:
+    type: string
+    required: true
+    description: Unique Key of the project where issue needs to be created
+  summary:
+    type: string
+    required: false
+    description: Subject of the issue
+  description:
+    type: string
+    required: false
+    description: Description of the issue
+  issueType:
+    type:  string
+    required: false
+    description: Type of Issue needs to be created eg- Bug
+  priority:
+    type: string
+    required: false
+    description: priority of the Issue
+  sfdcCaseId:
+    type: string
+    required: false
+    description: This is Salesforce Custom Field used to pass case object id
+  status:
+    type: string
+    required: false
+    description: Status of a case, for example, open or closed
+  owner:
+    type: string
+    required: false
+    description: Owner of the case
+  lastUpdatedDate:
+    type: string
+    required: false
+    description: Last modified date time of the date
+  comments:
+    type: string
+    required: false
+    description: Used to insert a new Case Comment
+  externalComments:
+    type: string
+    required: false
+    description: Comments field corresponds to external system
+  externalStatus:
+    type: string
+    required: false
+    description: Status field corresponds to external system
+  externalSystemLastUpdated:
+    type: string
+    required: false
+    description: Last Updated Date Fields corresponds to external system
+  externalOwner:
+    type: string
+    required: false
+    description: Owner of the issue in external system
+  externalPriority:
+    type: string
+    required: false
+    description: Priority of the issue in external system
+examples: !include examples/issue.raml
+  

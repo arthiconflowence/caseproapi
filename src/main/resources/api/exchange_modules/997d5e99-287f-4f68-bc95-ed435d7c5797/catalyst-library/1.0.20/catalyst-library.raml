@@ -1,0 +1,78 @@
+#%RAML 1.0 Library
+
+usage:
+
+securitySchemes:
+  basicAuthSecurity: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/basic-auth-securityscheme/1.0.1/basic-auth-securityscheme.raml
+
+types:
+  inventory: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/reference-datatype/1.0.0/reference-datatype.raml
+  catalystError: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/error-types/1.0.0/error-datatype.raml
+  incident: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/snow-incident-datatype/1.0.8/snow-incident-datatype.raml
+  incidentInsertResponse: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/snow-incident-datatype/1.0.8/snow-incident-insert-response-datatype.raml
+  success: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/success-datatype/1.0.0/success-datatype.raml
+  case: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/case-datatype/1.0.2/case-datatype.raml
+  issue: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/jira-issue-datatype/1.0.1/jira-issue-datatype.raml
+
+ 
+traits:
+  trackable: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/trackable-trait/1.0.1/trackable-trait.raml
+  sortable: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/sortable-trait/1.0.0/sortable-trait.raml
+  pageable: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/pageable-trait/1.0.0/pageable-trait.raml
+  returns-501:
+    responses:
+        501:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-501-example/1.0.2/returns-501-example.raml
+  returns-500:
+    responses:
+        500:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-500-example/1.0.2/returns-500-example.raml
+  returns-400:
+    responses:
+        400:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-400-example/1.0.1/returns-400-example.raml
+  returns-404:
+    responses:
+        404:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-404-example/1.0.1/returns-404-example.raml
+  returns-405:
+    responses:
+        501:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-501-example/1.0.2/returns-501-example.raml
+  returns-406:
+    responses:
+        406:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-406-example/1.0.1/returns-406-example.raml
+  returns-415:
+    responses:
+        415:
+          body:
+            application/json:
+              type: catalystError
+              example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/response-415-example/1.0.2/returns-415-example.raml
+  returns-200-success:
+    responses:
+      200:
+        body:
+          application/json:
+            type: success
+            example: !include exchange_modules/997d5e99-287f-4f68-bc95-ed435d7c5797/returns-200-success-example/1.0.0/returns-200-success-example.raml
+

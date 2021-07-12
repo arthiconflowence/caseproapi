@@ -1,0 +1,15 @@
+#%RAML 1.0 DataType
+description: use this type for variant attribute value
+type: object
+properties:
+  attributeValue:
+    type: string
+    maxLength: 50
+    description: The actual variation value.
+  name:
+    type: string
+    maxLength: 10
+    required: false
+    description: The localized display name of the variation value.
+examples:
+  !include examples/variation-attribute-value-example.raml

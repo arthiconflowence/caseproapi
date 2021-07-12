@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="IncidentResponse" format="json">
+      <types:shape format="weave" example="examples/IncidentResponse.json"><![CDATA[%dw 2.0
+
+type IncidentResponse = {|
+  code: String, 
+  message: String, 
+  sysId: String, 
+  number: String
+|} {"example": "{\"code\":\"200\",\"message\":\"Success\",\"sysId\":\"nkjsdnkjsd2322jds\",\"number\":\"INC930202\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="incidentProcess" format="json">
+      <types:shape format="weave" example="examples/incident-prc-insert-request.json"><![CDATA[%dw 2.0
+
+type incidentProcess = {|
+  caseId: String, 
+  caseNumber: String, 
+  caseOrigin: String, 
+  caseOwner: String, 
+  caseReason: String, 
+  contactName: String, 
+  "type": String, 
+  subject: String, 
+  active: String, 
+  activityDue: String, 
+  additionalAssigneeList: String, 
+  approval: String, 
+  approvalHistory: String, 
+  approvalSet: String, 
+  assignedTo: String, 
+  assignedGroup: String, 
+  businessDuration: String, 
+  businessService: String, 
+  businessStc: String, 
+  calendarDuration: String, 
+  calendarStc: String, 
+  callerId: String, 
+  category: String, 
+  causedBy: String, 
+  childIncidents: String, 
+  closeNotes: String, 
+  closeCode: String, 
+  closedAt: String, 
+  closedBy: String, 
+  cmdbCi: String, 
+  comments: String, 
+  commentsAndWorkNotes: String, 
+  company: String, 
+  contactType: String, 
+  correlationDisplay: String, 
+  correlationId: String, 
+  deliveryPlan: String, 
+  deliveryTask: String, 
+  description: String, 
+  dueDate: String, 
+  escalation: String, 
+  expectedStart: String, 
+  followUp: String, 
+  groupList: String, 
+  holdReason: String, 
+  impact: String, 
+  incident_state: String, 
+  knowlegde: String, 
+  location: String, 
+  madeSla: String, 
+  notify: String, 
+  number: String, 
+  openedAt: String, 
+  openedBy: String, 
+  order: String, 
+  parent: String, 
+  parentIncident: String, 
+  priority: String, 
+  problemId: String, 
+  reassignmentCount: String, 
+  reopenCount: String, 
+  reopenedBy: String, 
+  reopenedTime: String, 
+  resolvedAt: String, 
+  resolvedBy: String, 
+  rfc: String, 
+  severity: String, 
+  shortDescription: String, 
+  slaDue: String, 
+  state: String, 
+  subCategory: String, 
+  timeWorked: String, 
+  uponApproval: String, 
+  uponReject: String, 
+  urgency: String, 
+  userInput: String, 
+  watchList: String, 
+  workEnd: String, 
+  workNotes: String, 
+  workNotesList: String, 
+  workStart: String
+|} {"example": "{\"caseId\":\"\",\"caseNumber\":\"\",\"caseOrigin\":\"\",\"caseOwner\":\"\",\"caseReason\":\"\",\"contactName\":\"\",\"type\":\"\",\"subject\":\"\",\"active\":\"false\",\"activityDue\":\"\",\"additionalAssigneeList\":\"\",\"approval\":\"\",\"approvalHistory\":\"\",\"approvalSet\":\"\",\"assignedTo\":\"\",\"assignedGroup\":\"\",\"businessDuration\":\"\",\"businessService\":\"\",\"businessStc\":\"\",\"calendarDuration\":\"\",\"calendarStc\":\"0\",\"callerId\":\"\",\"category\":\"\",\"causedBy\":\"\",\"childIncidents\":\"\",\"closeNotes\":\"\",\"closeCode\":\"\",\"closedAt\":\"\",\"closedBy\":\"\",\"cmdbCi\":\"\",\"comments\":\"This is a test incident\",\"commentsAndWorkNotes\":\"\",\"company\":\"\",\"contactType\":\"\",\"correlationDisplay\":\"\",\"correlationId\":\"\",\"deliveryPlan\":\"\",\"deliveryTask\":\"\",\"description\":\"\",\"dueDate\":\"\",\"escalation\":\"\",\"expectedStart\":\"\",\"followUp\":\"\",\"groupList\":\"\",\"holdReason\":\"\",\"impact\":\"\",\"incident_state\":\"0\",\"knowlegde\":\"false\",\"location\":\"\",\"madeSla\":\"false\",\"notify\":\"0\",\"number\":\"\",\"openedAt\":\"\",\"openedBy\":\"\",\"order\":\"0\",\"parent\":\"\",\"parentIncident\":\"\",\"priority\":\"0\",\"problemId\":\"\",\"reassignmentCount\":\"0\",\"reopenCount\":\"0\",\"reopenedBy\":\"\",\"reopenedTime\":\"\",\"resolvedAt\":\"\",\"resolvedBy\":\"\",\"rfc\":\"\",\"severity\":\"0\",\"shortDescription\":\"This is a test incident\",\"slaDue\":\"\",\"state\":\"New\",\"subCategory\":\"\",\"timeWorked\":\"\",\"uponApproval\":\"\",\"uponReject\":\"\",\"urgency\":\"0\",\"userInput\":\"\",\"watchList\":\"\",\"workEnd\":\"\",\"workNotes\":\"\",\"workNotesList\":\"\",\"workStart\":\"\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="incidentSystem" format="json">
+      <types:shape format="weave" example="examples/incident.json"><![CDATA[%dw 2.0
+
+type incidentSystem = {|
+  active: String, 
+  activityDue: String, 
+  additionalAssigneeList: String, 
+  approval: String, 
+  approvalHistory: String, 
+  approvalSet: String, 
+  assignedTo: String, 
+  assignedGroup: String, 
+  businessDuration: String, 
+  businessService: String, 
+  businessStc: String, 
+  calendarDuration: String, 
+  calendarStc: String, 
+  callerId: String, 
+  category: String, 
+  causedBy: String, 
+  childIncidents: String, 
+  closeNotes: String, 
+  closeCode: String, 
+  closedAt: String, 
+  closedBy: String, 
+  cmdbCi: String, 
+  comments: String, 
+  commentsAndWorkNotes: String, 
+  company: String, 
+  contactType: String, 
+  correlationDisplay: String, 
+  correlationId: String, 
+  deliveryPlan: String, 
+  deliveryTask: String, 
+  description: String, 
+  dueDate: String, 
+  escalation: String, 
+  expectedStart: String, 
+  followUp: String, 
+  groupList: String, 
+  holdReason: String, 
+  impact: String, 
+  incident_state: String, 
+  knowlegde: Boolean, 
+  location: String, 
+  madeSla: Boolean, 
+  notify: String, 
+  number: String, 
+  openedAt: String, 
+  openedBy: String, 
+  order: String, 
+  parent: String, 
+  parentIncident: String, 
+  priority: String, 
+  problemId: String, 
+  reassignmentCount: String, 
+  reopenCount: String, 
+  reopenedBy: String, 
+  reopenedTime: String, 
+  resolvedAt: String, 
+  resolvedBy: String, 
+  rfc: String, 
+  severity: String, 
+  shortDescription: String, 
+  slaDue: String, 
+  state: String, 
+  subCategory: String, 
+  timeWorked: String, 
+  uponApproval: String, 
+  uponReject: String, 
+  urgency: String, 
+  userInput: String, 
+  watchList: String, 
+  workEnd: String, 
+  workNotes: String, 
+  workNotesList: String, 
+  workStart: String
+|} {"example": "{\"active\":\"\",\"activityDue\":\"\",\"additionalAssigneeList\":\"\",\"approval\":\"\",\"approvalHistory\":\"\",\"approvalSet\":\"\",\"assignedTo\":\"\",\"assignedGroup\":\"\",\"businessDuration\":\"\",\"businessService\":\"\",\"businessStc\":\"\",\"calendarDuration\":\"\",\"calendarStc\":\"\",\"callerId\":\"\",\"category\":\"\",\"causedBy\":\"\",\"childIncidents\":\"\",\"closeNotes\":\"\",\"closeCode\":\"\",\"closedAt\":\"\",\"closedBy\":\"\",\"cmdbCi\":\"\",\"comments\":\"\",\"commentsAndWorkNotes\":\"\",\"company\":\"\",\"contactType\":\"\",\"correlationDisplay\":\"\",\"correlationId\":\"\",\"deliveryPlan\":\"\",\"deliveryTask\":\"\",\"description\":\"\",\"dueDate\":\"\",\"escalation\":\"\",\"expectedStart\":\"\",\"followUp\":\"\",\"groupList\":\"\",\"holdReason\":\"\",\"impact\":\"\",\"incident_state\":\"\",\"knowlegde\":false,\"location\":\"\",\"madeSla\":false,\"notify\":\"\",\"number\":\"\",\"openedAt\":\"\",\"openedBy\":\"\",\"order\":\"\",\"parent\":\"\",\"parentIncident\":\"\",\"priority\":\"\",\"problemId\":\"\",\"reassignmentCount\":\"\",\"reopenCount\":\"\",\"reopenedBy\":\"\",\"reopenedTime\":\"\",\"resolvedAt\":\"\",\"resolvedBy\":\"\",\"rfc\":\"\",\"severity\":\"\",\"shortDescription\":\"This is a test incident\",\"slaDue\":\"\",\"state\":\"\",\"subCategory\":\"\",\"timeWorked\":\"\",\"uponApproval\":\"\",\"uponReject\":\"\",\"urgency\":\"\",\"userInput\":\"\",\"watchList\":\"\",\"workEnd\":\"\",\"workNotes\":\"\",\"workNotesList\":\"\",\"workStart\":\"\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="scatterResponse" format="json">
+      <types:shape format="weave" example="examples/scatterResponse.json"><![CDATA[%dw 2.0
+
+type scatterResponse = {|
+  "0": {|
+    inboundAttachmentNames: Array<Any>, 
+    exceptionPayload: Null, 
+    inboundPropertyNames: Array<Any>, 
+    outboundAttachmentNames: Array<Any>, 
+    payload: {|
+      jiraMessage: String, 
+      jiraSysId: String, 
+      issueNumber: String
+    |}, 
+    outboundPropertyNames: Array<Any>, 
+    attributes: {|
+      headers: {|
+        "content-type": String, 
+        date: String, 
+        server: String, 
+        "transfer-encoding": String, 
+        connection: String
+      |}, 
+      reasonPhrase: String, 
+      statusCode: Number {"typeId": "int"}
+    |}
+  |}, 
+  "1": {|
+    inboundAttachmentNames: Array<Any>, 
+    exceptionPayload: Null, 
+    inboundPropertyNames: Array<Any>, 
+    outboundAttachmentNames: Array<Any>, 
+    payload: {|
+      snowMessage: String, 
+      snowSysId: String, 
+      incidentNumber: String
+    |}, 
+    outboundPropertyNames: Array<Any>, 
+    attributes: {|
+      headers: {|
+        "content-type": String, 
+        date: String, 
+        server: String, 
+        "content-length": String, 
+        connection: String
+      |}, 
+      reasonPhrase: String, 
+      statusCode: Number {"typeId": "int"}
+    |}
+  |}
+|} {"example": "{\"0\":{\"inboundAttachmentNames\":[],\"exceptionPayload\":null,\"inboundPropertyNames\":[],\"outboundAttachmentNames\":[],\"payload\":{\"jiraMessage\":\"Issue Created Successfully\",\"jiraSysId\":\"10045\",\"issueNumber\":\"AC-46\"},\"outboundPropertyNames\":[],\"attributes\":{\"headers\":{\"content-type\":\"application\/json; charset=UTF-8\",\"date\":\"Thu, 07 Nov 2019 18:58:16 GMT\",\"server\":\"nginx\",\"transfer-encoding\":\"chunked\",\"connection\":\"keep-alive\"},\"reasonPhrase\":\"OK\",\"statusCode\":200}},\"1\":{\"inboundAttachmentNames\":[],\"exceptionPayload\":null,\"inboundPropertyNames\":[],\"outboundAttachmentNames\":[],\"payload\":{\"snowMessage\":\"Incident Created Successfully\",\"snowSysId\":\"a1e61060db41001073a38a18489619cd\",\"incidentNumber\":\"INC0010164\"},\"outboundPropertyNames\":[],\"attributes\":{\"headers\":{\"content-type\":\"application\/json; charset=UTF-8\",\"date\":\"Thu, 07 Nov 2019 18:58:16 GMT\",\"server\":\"nginx\",\"content-length\":\"121\",\"connection\":\"keep-alive\"},\"reasonPhrase\":\"OK\",\"statusCode\":200}}}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#277d37ad-0754-4dd0-8b92-ab674e27f4af">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="incidentProcess"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="incidentSystem"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#e7471bcc-d27c-446c-8d09-cbb6c0ee1861">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="IncidentResponse"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#f9a0ade0-cbfb-4842-a9bc-ef2353c86bf4">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="scatterResponse"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
