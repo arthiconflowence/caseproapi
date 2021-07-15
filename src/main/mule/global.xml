@@ -48,7 +48,7 @@ http://www.mulesoft.org/schema/mule/servicenow http://www.mulesoft.org/schema/mu
 	
     <import doc:name="Import-global-common" doc:id="3303247a-3986-41be-93d4-0385333c1dc3"
 		file="global-common.xml" />
-	<import doc:name="Import-common-error-handler" doc:id="d4d45cfd-64bb-4eb1-9221-edb9a4031152"
+	<import doc:name="Import-common-error-handler" doc:id="c5ccca41-1652-46d5-bb2c-0da716f2ffae"
 		file="common-error-handler.xml" />
 	
 </mule>

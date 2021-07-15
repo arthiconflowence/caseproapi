@@ -8,7 +8,7 @@ fun getPriority(priority: String) = do {
 }
 ---
 {
-  "projectKey": p('jira-sys-api.project-key'),
+  "projectKey": "JIR",
   "summary": payload.subject,
   "description": payload.description,
   "priority": getPriority(trim(payload.priority)),
